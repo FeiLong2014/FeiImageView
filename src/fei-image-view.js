@@ -546,7 +546,7 @@
         var me = this,
 		    img = me.image;
 
-        me.currentIndex++;
+        me.currentIndex--;
         if (me.currentIndex < 0) {
             me.currentIndex = me.images.length - 1;
         }
