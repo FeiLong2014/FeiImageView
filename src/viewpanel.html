@@ -10,60 +10,60 @@
     <center>
         <div id="con" style="margin: 0 auto;width:610px;"></div>
         <script type="text/javascript">
-            var img = new Fei.ImagePanel({
+            var panel = new Fei.ImagePanel({
                 images: ['images/img.jpg', 'images/1.jpg', 'images/2.jpg']
             }).init(document.getElementById('con'));
 
             function stretchH() {
-                img.stretchH();
-                img.centerImage();
-                img.image.doChange();
+                panel.stretchH();
+                panel.centerImage();
+                panel.image.doChange();
             }
             function stretchV() {
-                img.stretchV();
-                img.centerImage();
-                img.image.doChange();
+                panel.stretchV();
+                panel.centerImage();
+                panel.image.doChange();
             }
             function originalOptimally() {
-                img.originalOptimally();
-                img.centerImage();
-                img.image.doChange();
+                panel.originalOptimally();
+                panel.centerImage();
+                panel.image.doChange();
             }
             function stretchOptimally() {
-                img.stretchOptimally();
-                img.centerImage();
-                img.image.doChange();
+                panel.stretchOptimally();
+                panel.centerImage();
+                panel.image.doChange();
             }
             function centerImage() {
-                img.centerImage();
-                img.image.doChange();
+                panel.centerImage();
+                panel.image.doChange();
             }
             function zoomIn() {
-                img.zoomIn();
-                img.image.doChange();
+                panel.zoomIn();
+                panel.image.doChange();
             }
             function zoomOut() {
-                img.zoomOut();
-                img.image.doChange();
+                panel.zoomOut();
+                panel.image.doChange();
             }
             function rotateClockwise() {
-                img.rotate(90);
-                img.image.doChange();
+                panel.rotate(90);
+                panel.image.doChange();
             }
             function rotateAntiClockwise() {
-                img.rotate(-90);
-                img.image.doChange();
+                panel.rotate(-90);
+                panel.image.doChange();
             }
             function rotateTo() {
                 var val = parseInt(document.getElementById('rotateTo').value, 10);
-                img.rotate(val);
-                img.image.doChange();
+                panel.rotate(val);
+                panel.image.doChange();
             }
             function upImage() {
-                img.upImage();
+                panel.upImage();
             }
             function nextImage() {
-                img.nextImage();
+                panel.nextImage();
             }
         </script>
         <div style="width:602px;margin:0 auto;display:block;margin-top:20px;line-height:30px">
