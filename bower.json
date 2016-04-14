@@ -3,6 +3,7 @@
   "main": "dist/fImageView.js",
   "license": "GPL",
   "ignore": [
+      "package.json"
   ],
   "keywords": [
     "imageview",
