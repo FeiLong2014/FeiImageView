@@ -12,4 +12,4 @@ Others(支持css3动画的浏览器)
 交流邮箱 287449943@qq.com
 
 #截图
-<img src='tu.png' />
+<img src='images/tu.png' />
