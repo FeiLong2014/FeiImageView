@@ -38,6 +38,41 @@ var Fei = window.Fei = {
      * @unfile
      */
     var utils = Fei.utils = {
+        getScrollTop: function (doc) {
+            doc = doc || document;
+            return Math.max(doc.documentElement.scrollTop, doc.body.scrollTop);
+        },
+        getScrollLeft: function (doc) {
+            doc = doc || document;
+            return Math.max(doc.documentElement.scrollLeft, doc.body.scrollLeft);
+        },
+        /**
+         * 获得页面元素的坐标
+         * @param { HTMLElement } dom节点
+         * @return { Object } 属性名称 {top:10,left:10}
+         */
+        getCoord: function (el) {
+            var _t = 0;
+            var _l = 0;
+            if (document.documentElement.getBoundingClientRect) {
+                var box = el.getBoundingClientRect();
+                var oDoc = el.ownerDocument;
+                if (navigator.userAgent.indexOf("MSIE 6.0") >= 0) {
+                    _t = box.top - 2 + utils.getScrollTop(oDoc);
+                    _l = box.left - 2 + utils.getScrollLeft(oDoc);
+                } else {
+                    _t = box.top + utils.getScrollTop(oDoc);
+                    _l = box.left + utils.getScrollLeft(oDoc);
+                }
+            } else {
+                while (el.offsetParent) {
+                    _t += el.offsetTop;
+                    _l += el.offsetLeft;
+                    el = el.offsetParent;
+                }
+            }
+            return { top: _t, left: _l };
+        },
         /**
          * 设置给定的dom对象的属性
          * @param { HTMLElement } dom节点
@@ -603,21 +638,29 @@ var Fei = window.Fei = {
          * 放大 缩小
          * @method scale
          * @param { Number } 倍数 如 1.1 or 0.9
+         * @param { Number } x轴的中心点 如 0.5
+         * @param { Number } y轴的中心点 如 0.5
          * @return { Object } fImage对象
          */
-        scale: function (val) {
+        scale: function (val, pointX, poinY) {
             var me = this,
                 rotation = me.rotation % 360,
                 imgAdSize = me.getAdSize(),
-                marginAdjustment = 0;
+                marginAdjustment = 0,
+                pointX = pointX || 0.5,
+                poinY = poinY || 0.5;
 
-            me.width = me.width * val;
-            me.height = me.height * val;
             if (rotation === 90 || rotation === 270 || rotation === -90 || rotation === -270) {
                 marginAdjustment = (imgAdSize.h - imgAdSize.w) / 2;
             }
-            me.transition(me.translates.x - (me.width - imgAdSize.w) / 2 + marginAdjustment,
-                me.translates.y - (me.height - imgAdSize.h) / 2 - marginAdjustment);
+
+            var tX = me.translates.x - (me.width - imgAdSize.w) / 2 + marginAdjustment - (me.width * val - me.width) * pointX;
+            var tY = me.translates.y - (me.height - imgAdSize.h) / 2 - marginAdjustment - (me.height * val - me.height) * poinY;
+
+            me.width = me.width * val;
+            me.height = me.height * val;
+
+            me.transition(tX, tY);
 
             return me;
         },
@@ -748,8 +791,8 @@ var Fei = window.Fei = {
             (pDom || document.body).appendChild(me.dom);
             me.width = me.dom.offsetWidth;
             me.height = me.dom.offsetHeight;
+            me.coord = utils.getCoord(me.dom);
             me.initImage();
-
             return me;
         },
 
@@ -782,8 +825,55 @@ var Fei = window.Fei = {
             utils.addEvent(img, 'mousemove', me.mousemove, me);
             utils.addEvent(img, 'mouseup', me.mouseup, me);
             utils.addEvent(img, 'mouseout', me.mouseup, me);
+            if ('onmousewheel' in document.documentElement) {
+                utils.addEvent(img, "mousewheel", me.mousewheel, me);
+            } else {
+                utils.addEvent(img, "DOMMouseScroll", me.mousewheel, me);
+            }
 
             return me;
+        },
+
+        /**
+         * 鼠标滚轮
+         * @event mousewheel
+         */
+        mousewheel: function (ev) {
+            var me = this,
+                ev = ev || window.event,
+                wheelDelta = ev.wheelDelta,
+                scale = 1,
+                //容器相对页面的坐标
+                coord = me.coord,
+                eX = ev.clientX,
+                eY = ev.clientY,
+                img = me.image;
+
+            if (wheelDelta === undefined) {
+                wheelDelta = 0 - (ev.detail || 0);
+            }
+
+            if (wheelDelta > 0) {
+                scale = 1.1;
+            } else {
+                scale = 0.9;
+            }
+
+            //鼠标相对图片左上角的坐标
+            var evCoord = {
+                top: eY - coord.top - img.translates.y,
+                left: eX - coord.left - img.translates.x
+            }
+
+            img.scale(scale, evCoord.left / img.width, evCoord.top / img.height).doChange();
+
+            if (ev.stopPropagation) {
+                ev.stopPropagation();
+            }
+            if (ev.preventDefault) {
+                ev.preventDefault();
+            }
+            window.event ? window.event.returnValue = false : ev.preventDefault();
         },
 
         /**
@@ -825,8 +915,7 @@ var Fei = window.Fei = {
                 img = me.image;
                 var x = (ev.x || ev.clientX) - me.moveStartX + me.lastTranslateX;
                 var y = (ev.y || ev.clientY) - me.moveStartY + me.lastTranslateY;
-                me.image.transition(x, y);
-                me.image.doChange();
+                me.image.transition(x, y).doChange();
             }
             if (ev.stopPropagation) {
                 ev.stopPropagation();
