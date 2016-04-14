@@ -35,6 +35,41 @@
      * @unfile
      */
     var utils = Fei.utils = {
+        getScrollTop: function (doc) {
+            doc = doc || document;
+            return Math.max(doc.documentElement.scrollTop, doc.body.scrollTop);
+        },
+        getScrollLeft: function (doc) {
+            doc = doc || document;
+            return Math.max(doc.documentElement.scrollLeft, doc.body.scrollLeft);
+        },
+        /**
+         * 获得页面元素的坐标
+         * @param { HTMLElement } dom节点
+         * @return { Object } 属性名称 {top:10,left:10}
+         */
+        getCoord: function (el) {
+            var _t = 0;
+            var _l = 0;
+            if (document.documentElement.getBoundingClientRect) {
+                var box = el.getBoundingClientRect();
+                var oDoc = el.ownerDocument;
+                if (navigator.userAgent.indexOf("MSIE 6.0") >= 0) {
+                    _t = box.top - 2 + utils.getScrollTop(oDoc);
+                    _l = box.left - 2 + utils.getScrollLeft(oDoc);
+                } else {
+                    _t = box.top + utils.getScrollTop(oDoc);
+                    _l = box.left + utils.getScrollLeft(oDoc);
+                }
+            } else {
+                while (el.offsetParent) {
+                    _t += el.offsetTop;
+                    _l += el.offsetLeft;
+                    el = el.offsetParent;
+                }
+            }
+            return { top: _t, left: _l };
+        },
         /**
          * 设置给定的dom对象的属性
          * @param { HTMLElement } dom节点
