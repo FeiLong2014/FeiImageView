@@ -1,0 +1,27 @@
+{
+  "name": "fImageView",
+  "title": "fImageView",
+  "description": "fImageViewÍ¼Æ¬²é¿´Æ÷",
+  "version": "1.0.0",
+  "author": {
+    "name": "287449943@qq.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FeiLong2014/FeiImageView.git"
+  },
+  "keywords": [
+    "imageview",
+    "feiimageview",
+    "image"
+  ],
+  "bugs": {
+    "url": "https://github.com/FeiLong2014/FeiImageView/issues"
+  },
+  "devDependencies": {
+    "gulp": "3.8.11",
+    "gulp-concat": "2.5.2",
+    "gulp-uglify": "1.2.0",
+    "rimraf": "2.2.8"
+  }
+}
