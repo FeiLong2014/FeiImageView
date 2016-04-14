@@ -1,63 +1,48 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script src="../lib/jquery.js"></script>
-    <script src="fei-image-view.js"></script>
+    <script src="dist/fImageView.min.js"></script>
 </head>
 <body>
     <center>
-        <div id="con" style="margin: 0 auto;width:610px;"></div>
+        <div id="con" style="margin:0 auto;width:610px;height:610px;border:1px solid #58AFD6;position:relative"></div>
         <script type="text/javascript">
-            var panel = new Fei.ImagePanel({
+            var panel = new Fei.fImagePanel({
                 images: ['images/img.jpg', 'images/1.jpg', 'images/2.jpg']
-            }).init(document.getElementById('con'));
+            }).render(document.getElementById('con'));
 
             function stretchH() {
-                panel.stretchH();
-                panel.centerImage();
-                panel.image.doChange();
+                panel.stretchH().centerImage().doChange();
             }
             function stretchV() {
-                panel.stretchV();
-                panel.centerImage();
-                panel.image.doChange();
+                panel.stretchV().centerImage().doChange();
             }
             function originalOptimally() {
-                panel.originalOptimally();
-                panel.centerImage();
-                panel.image.doChange();
+                panel.originalOptimally().centerImage().doChange();
             }
             function stretchOptimally() {
-                panel.stretchOptimally();
-                panel.centerImage();
-                panel.image.doChange();
+                panel.stretchOptimally().centerImage().doChange();
             }
             function centerImage() {
-                panel.centerImage();
-                panel.image.doChange();
+                panel.centerImage().doChange();
             }
             function zoomIn() {
-                panel.zoomIn();
-                panel.image.doChange();
+                panel.scale(1.1).doChange();
             }
             function zoomOut() {
-                panel.zoomOut();
-                panel.image.doChange();
+                panel.scale(0.9).doChange();
             }
             function rotateClockwise() {
-                panel.rotate(90);
-                panel.image.doChange();
+                panel.rotate(90).doChange();
             }
             function rotateAntiClockwise() {
-                panel.rotate(-90);
-                panel.image.doChange();
+                panel.rotate(-90).doChange();
             }
             function rotateTo() {
                 var val = parseInt(document.getElementById('rotateTo').value, 10);
-                panel.rotate(val);
-                panel.image.doChange();
+                panel.rotate(val).doChange();
             }
             function upImage() {
                 panel.upImage();
