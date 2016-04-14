@@ -169,21 +169,29 @@
          * 放大 缩小
          * @method scale
          * @param { Number } 倍数 如 1.1 or 0.9
+         * @param { Number } x轴的中心点 如 0.5
+         * @param { Number } y轴的中心点 如 0.5
          * @return { Object } fImage对象
          */
-        scale: function (val) {
+        scale: function (val, pointX, poinY) {
             var me = this,
                 rotation = me.rotation % 360,
                 imgAdSize = me.getAdSize(),
-                marginAdjustment = 0;
+                marginAdjustment = 0,
+                pointX = pointX || 0.5,
+                poinY = poinY || 0.5;
 
-            me.width = me.width * val;
-            me.height = me.height * val;
             if (rotation === 90 || rotation === 270 || rotation === -90 || rotation === -270) {
                 marginAdjustment = (imgAdSize.h - imgAdSize.w) / 2;
             }
-            me.transition(me.translates.x - (me.width - imgAdSize.w) / 2 + marginAdjustment,
-                me.translates.y - (me.height - imgAdSize.h) / 2 - marginAdjustment);
+
+            var tX = me.translates.x - (me.width - imgAdSize.w) / 2 + marginAdjustment - (me.width * val - me.width) * pointX;
+            var tY = me.translates.y - (me.height - imgAdSize.h) / 2 - marginAdjustment - (me.height * val - me.height) * poinY;
+
+            me.width = me.width * val;
+            me.height = me.height * val;
+
+            me.transition(tX, tY);
 
             return me;
         },
