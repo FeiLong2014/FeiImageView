@@ -6,7 +6,7 @@ var gulp = require("gulp"),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify');
 
-var rootPath = './wwwroot/';
+var rootPath = './';
 var allJsPaths = [
     rootPath + 'src/fImageView.js',
     rootPath + 'src/utils.js',
