@@ -1,13 +1,12 @@
 {
-  "name": "feiimageview",
-  "main": "dist/feiimageview.js",
+  "name": "fImageView",
+  "main": "dist/fImageView.js",
   "license": "GPL",
   "ignore": [
-    "package.json"
   ],
   "keywords": [
     "imageview",
-    "feiimageview",
+    "fImageView",
     "image"
   ]
 }
