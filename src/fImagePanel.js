@@ -72,8 +72,8 @@
             (pDom || document.body).appendChild(me.dom);
             me.width = me.dom.offsetWidth;
             me.height = me.dom.offsetHeight;
+            me.coord = utils.getCoord(me.dom);
             me.initImage();
-
             return me;
         },
 
@@ -106,8 +106,55 @@
             utils.addEvent(img, 'mousemove', me.mousemove, me);
             utils.addEvent(img, 'mouseup', me.mouseup, me);
             utils.addEvent(img, 'mouseout', me.mouseup, me);
+            if ('onmousewheel' in document.documentElement) {
+                utils.addEvent(img, "mousewheel", me.mousewheel, me);
+            } else {
+                utils.addEvent(img, "DOMMouseScroll", me.mousewheel, me);
+            }
 
             return me;
+        },
+
+        /**
+         * 鼠标滚轮
+         * @event mousewheel
+         */
+        mousewheel: function (ev) {
+            var me = this,
+                ev = ev || window.event,
+                wheelDelta = ev.wheelDelta,
+                scale = 1,
+                //容器相对页面的坐标
+                coord = me.coord,
+                eX = ev.clientX,
+                eY = ev.clientY,
+                img = me.image;
+
+            if (wheelDelta === undefined) {
+                wheelDelta = 0 - (ev.detail || 0);
+            }
+
+            if (wheelDelta > 0) {
+                scale = 1.1;
+            } else {
+                scale = 0.9;
+            }
+
+            //鼠标相对图片左上角的坐标
+            var evCoord = {
+                top: eY - coord.top - img.translates.y,
+                left: eX - coord.left - img.translates.x
+            }
+
+            img.scale(scale, evCoord.left / img.width, evCoord.top / img.height).doChange();
+
+            if (ev.stopPropagation) {
+                ev.stopPropagation();
+            }
+            if (ev.preventDefault) {
+                ev.preventDefault();
+            }
+            window.event ? window.event.returnValue = false : ev.preventDefault();
         },
 
         /**
@@ -149,8 +196,7 @@
                 img = me.image;
                 var x = (ev.x || ev.clientX) - me.moveStartX + me.lastTranslateX;
                 var y = (ev.y || ev.clientY) - me.moveStartY + me.lastTranslateY;
-                me.image.transition(x, y);
-                me.image.doChange();
+                me.image.transition(x, y).doChange();
             }
             if (ev.stopPropagation) {
                 ev.stopPropagation();
