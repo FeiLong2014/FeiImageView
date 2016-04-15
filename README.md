@@ -22,7 +22,7 @@ Config:
 <table style="width:800px">
     <tbody>
         <tr>
-            <th style="width:120px"></th>
+            <th><span style="width:120px"></span></th>
             <th style="width:120px">Type</th>
             <th style="width:120px">Default</th>
             <th>Description</th>
