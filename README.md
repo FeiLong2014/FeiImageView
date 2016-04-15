@@ -20,12 +20,12 @@ Others(支持css3动画的浏览器)
 #api
 Config:
 
-<table>
+<table style="width:100%">
     <tbody>
         <tr>
-            <th></th>
-            <th>Type</th>
-            <th>Default</th>
+            <th style="width:120px"></th>
+            <th style="width:120px">Type</th>
+            <th style="width:120px">Default</th>
             <th>Description</th>
         </tr>
         <tr>
@@ -43,12 +43,12 @@ Config:
     </tbody>
 </table>
 Method：
-<table>
+<table style="width:100%">
     <tbody>
         <tr>
-            <th></th>
-            <th>Params</th>
-            <th>Return</th>
+            <th style="width:120px"></th>
+            <th style="width:150px">Params</th>
+            <th style="width:150px">Return</th>
             <th>Description</th>
         </tr>
         <tr>
