@@ -42,7 +42,32 @@ Config:
         </tr>
     </tbody>
 </table>
-Method
+Method：
+<table>
+    <tbody>
+        <tr>
+            <th></th>
+            <th>Params</th>
+            <th>Return</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>render</td>
+            <td>
+                <p>
+                    /**
+                    * 渲染
+                    * @method render
+                    * @param { HTMLElement } 容器父级元素
+                    * @return { Object } fImagePanel对象
+                    */
+                </p>
+            </td>
+            <td>[]</td>
+            <td>Image List</td>
+        </tr>
+    </tbody>
+</table>
 
 #截图
 <img src='images/tu.png' />
