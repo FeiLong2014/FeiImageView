@@ -18,14 +18,13 @@ Others(支持css3动画的浏览器)
 交流邮箱 287449943@qq.com
 
 #api
-<iframe src="api/api.html"></iframe>
 Config:
-<table style="width:800px">
+<table>
     <tbody>
         <tr>
-            <th><span style="width:120px"></span></th>
-            <th style="width:120px">Type</th>
-            <th style="width:120px">Default</th>
+            <th></th>
+            <th>Type</th>
+            <th>Default</th>
             <th>Description</th>
         </tr>
         <tr>
@@ -43,12 +42,12 @@ Config:
     </tbody>
 </table>
 Method：
-<table style="width:100%">
+<table>
     <tbody>
         <tr>
-            <th style="width:120px"></th>
-            <th style="width:150px">Params</th>
-            <th style="width:150px">Return</th>
+            <th></th>
+            <th>Params</th>
+            <th>Return</th>
             <th>Description</th>
         </tr>
         <tr>
