@@ -18,6 +18,7 @@ Others(支持css3动画的浏览器)
 交流邮箱 287449943@qq.com
 
 #api
+<iframe src="api/api.html"></iframe>
 Config:
 <table style="width:800px">
     <tbody>
