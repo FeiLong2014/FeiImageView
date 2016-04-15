@@ -19,8 +19,7 @@ Others(支持css3动画的浏览器)
 
 #api
 Config:
-
-<table style="width:100%">
+<table style="width:800px">
     <tbody>
         <tr>
             <th style="width:120px"></th>
