@@ -1,7 +1,4 @@
-﻿/// <binding Clean='clean' />
-
 var gulp = require("gulp"),
-    rimraf = require("rimraf"),
     fs = require("fs"),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify');
@@ -25,4 +22,7 @@ gulp.task('buildjsmin', function () {
         .pipe(concat('fImageView.min.js'))
         .pipe(gulp.dest(rootPath + 'dist/'));
 });
-gulp.task('build', ['buildjs', 'buildjsmin']);
+
+gulp.task('build', ['buildjs', 'buildjsmin'], function () {
+    gulp.watch(allJsPaths, ['build']);
+});
