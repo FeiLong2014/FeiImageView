@@ -238,6 +238,7 @@ var Fei = window.Fei = {
         })()
     }
 })();
+
 /**
  * 针对IE 6 7 8 的图片旋转工具  参考jqueryrotate.js 移除对jquery的依赖
  * @file
@@ -714,9 +715,52 @@ var Fei = window.Fei = {
                 w: imgAdWidth,
                 h: imgAdHeight
             };
+        },
+
+        /**
+         * 设置当前图片真实宽、高。 (旋转、放大后进行换算，即为当前页面所呈现的图像宽、高)
+         * @method setAdSize
+         * @param { Number } 宽 例如: 500
+         * @param { Number } 高 例如: 500
+         * @return { Object } fImage对象
+         */
+        setAdSize: function (w, h) {
+            var me = this,
+                rotation = me.rotation % 360;
+
+            if (rotation === 90 || rotation === 270 || rotation === -90 || rotation === -270) {
+                me.height = w;
+                me.width = h;
+            } else {
+                me.height = h;
+                me.width = w;
+            }
+            return me;
+        },
+
+        /**
+         * 获取原始图片真实宽、高。 (旋转、放大后进行换算，即为当前页面所呈现的图像宽、高)
+         * @method getOrgSize
+         * @return { Object } 例如 {w:600, h:400}
+         */
+        getOrgSize: function () {
+            var me = this,
+                rotation = me.rotation % 360,
+                imgAdWidth = me.orgWidth,
+                imgAdHeight = me.orgHeight;
+
+            if (rotation === 90 || rotation === 270 || rotation === -90 || rotation === -270) {
+                imgAdWidth = me.orgHeight;
+                imgAdHeight = me.orgWidth;
+            }
+            return {
+                w: imgAdWidth,
+                h: imgAdHeight
+            };
         }
     }
 })();
+
 /**
  * 查看器 图片容器类
  * @file
@@ -959,11 +1003,10 @@ var Fei = window.Fei = {
          */
         stretchH: function () {
             var me = this,
-                img = me.image;
+                img = me.image,
+                orgImgSize = img.getOrgSize();
 
-            img.width = me.width;
-            img.height = img.orgHeight * me.width / img.orgWidth;
-
+            img.setAdSize(me.width, orgImgSize.h * me.width / orgImgSize.w);
             return me;
         },
 
@@ -974,10 +1017,10 @@ var Fei = window.Fei = {
          */
         stretchV: function () {
             var me = this,
-                img = me.image;
+                img = me.image,
+                orgImgSize = img.getOrgSize();
 
-            img.height = me.height;
-            img.width = img.orgWidth * me.height / img.orgHeight;
+            img.setAdSize(orgImgSize.w * me.height / orgImgSize.h, me.height);
 
             return me;
         },
@@ -1004,12 +1047,14 @@ var Fei = window.Fei = {
          */
         stretchOptimally: function () {
             var me = this,
-                img = me.image;
+                img = me.image,
+                orgImgSize = img.getOrgSize(),
+                adImgSize = img.getAdSize();
 
-            if (img.orgHeight <= me.height && img.orgWidth <= me.width) {
+            if (orgImgSize.h <= me.height && orgImgSize.w <= me.width) {
                 me.originalOptimally();
             } else {
-                if (img.orgWidth * me.height / img.orgHeight > me.width) {
+                if (adImgSize.w * me.height / adImgSize.h > me.width) {
                     me.stretchH();
                 } else {
                     me.stretchV();
