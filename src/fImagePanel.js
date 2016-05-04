@@ -240,11 +240,10 @@
          */
         stretchH: function () {
             var me = this,
-                img = me.image;
+                img = me.image,
+                orgImgSize = img.getOrgSize();
 
-            img.width = me.width;
-            img.height = img.orgHeight * me.width / img.orgWidth;
-
+            img.setAdSize(me.width, orgImgSize.h * me.width / orgImgSize.w);
             return me;
         },
 
@@ -255,10 +254,10 @@
          */
         stretchV: function () {
             var me = this,
-                img = me.image;
+                img = me.image,
+                orgImgSize = img.getOrgSize();
 
-            img.height = me.height;
-            img.width = img.orgWidth * me.height / img.orgHeight;
+            img.setAdSize(orgImgSize.w * me.height / orgImgSize.h, me.height);
 
             return me;
         },
@@ -285,12 +284,14 @@
          */
         stretchOptimally: function () {
             var me = this,
-                img = me.image;
+                img = me.image,
+                orgImgSize = img.getOrgSize(),
+                adImgSize = img.getAdSize();
 
-            if (img.orgHeight <= me.height && img.orgWidth <= me.width) {
+            if (orgImgSize.h <= me.height && orgImgSize.w <= me.width) {
                 me.originalOptimally();
             } else {
-                if (img.orgWidth * me.height / img.orgHeight > me.width) {
+                if (adImgSize.w * me.height / adImgSize.h > me.width) {
                     me.stretchH();
                 } else {
                     me.stretchV();
