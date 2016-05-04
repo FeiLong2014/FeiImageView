@@ -245,6 +245,48 @@
                 w: imgAdWidth,
                 h: imgAdHeight
             };
+        },
+
+        /**
+         * 设置当前图片真实宽、高。 (旋转、放大后进行换算，即为当前页面所呈现的图像宽、高)
+         * @method setAdSize
+         * @param { Number } 宽 例如: 500
+         * @param { Number } 高 例如: 500
+         * @return { Object } fImage对象
+         */
+        setAdSize: function (w, h) {
+            var me = this,
+                rotation = me.rotation % 360;
+
+            if (rotation === 90 || rotation === 270 || rotation === -90 || rotation === -270) {
+                me.height = w;
+                me.width = h;
+            } else {
+                me.height = h;
+                me.width = w;
+            }
+            return me;
+        },
+
+        /**
+         * 获取原始图片真实宽、高。 (旋转、放大后进行换算，即为当前页面所呈现的图像宽、高)
+         * @method getOrgSize
+         * @return { Object } 例如 {w:600, h:400}
+         */
+        getOrgSize: function () {
+            var me = this,
+                rotation = me.rotation % 360,
+                imgAdWidth = me.orgWidth,
+                imgAdHeight = me.orgHeight;
+
+            if (rotation === 90 || rotation === 270 || rotation === -90 || rotation === -270) {
+                imgAdWidth = me.orgHeight;
+                imgAdHeight = me.orgWidth;
+            }
+            return {
+                w: imgAdWidth,
+                h: imgAdHeight
+            };
         }
     }
 })();
