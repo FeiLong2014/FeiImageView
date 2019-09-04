@@ -10,27 +10,27 @@ var Fei = window.Fei = {
 
 (function () {
     var fixAttr = {
-        tabindex: 'tabIndex',
-        readonly: 'readOnly',
-        'for': 'htmlFor',
-        'class': 'className',
-        maxlength: 'maxLength',
-        cellspacing: 'cellSpacing',
-        cellpadding: 'cellPadding',
-        rowspan: 'rowSpan',
-        colspan: 'colSpan',
-        usemap: 'useMap',
-        frameborder: 'frameBorder',
-        contenteditable: 'contentEditable'
-    },
-    supportSetAttr = (function () {
-        div = document.createElement('div');
-        div.setAttribute('class', 't');
-        return div.className === 't';
-    })(),
-    objectPrototype = Object.prototype,
-    toString = objectPrototype.toString,
-    enumerables = ['valueOf', 'toLocaleString', 'toString', 'constructor'];
+            tabindex: 'tabIndex',
+            readonly: 'readOnly',
+            'for': 'htmlFor',
+            'class': 'className',
+            maxlength: 'maxLength',
+            cellspacing: 'cellSpacing',
+            cellpadding: 'cellPadding',
+            rowspan: 'rowSpan',
+            colspan: 'colSpan',
+            usemap: 'useMap',
+            frameborder: 'frameBorder',
+            contenteditable: 'contentEditable'
+        },
+        supportSetAttr = (function () {
+            div = document.createElement('div');
+            div.setAttribute('class', 't');
+            return div.className === 't';
+        })(),
+        objectPrototype = Object.prototype,
+        toString = objectPrototype.toString,
+        enumerables = ['valueOf', 'toLocaleString', 'toString', 'constructor'];
 
     /**
      * 静态工具函数
@@ -71,7 +71,7 @@ var Fei = window.Fei = {
                     el = el.offsetParent;
                 }
             }
-            return { top: _t, left: _l };
+            return {top: _t, left: _l};
         },
         /**
          * 设置给定的dom对象的属性
@@ -134,7 +134,7 @@ var Fei = window.Fei = {
          */
         getBrowserStyle: function (styleName, styleValue) {
             var temp = ['', '-o-', '-ms-', '-moz-', '-webkit-'],
-            styleStr = '';
+                styleStr = '';
             for (var i = 0; i < temp.length; i++) {
                 styleStr += (temp[i] + styleName + ':' + styleValue + ';');
             }
@@ -170,7 +170,7 @@ var Fei = window.Fei = {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
                 function (c) {
                     var r = Math.random() * 16 | 0,
-                    v = c === 'x' ? r : (r & 0x3 | 0x8);
+                        v = c === 'x' ? r : (r & 0x3 | 0x8);
                     return v.toString(16);
                 });
         },
@@ -206,7 +206,7 @@ var Fei = window.Fei = {
                     clone[i] = utils.clone(item[i]);
                 }
             }
-                // Object
+            // Object
             else if (type === '[object Object]' && item.constructor === Object) {
                 clone = {};
 
@@ -257,13 +257,12 @@ var Fei = window.Fei = {
                     return element;
                 }
                 if (this.length === 0 || typeof parameters == "undefined") return;
-                if (typeof parameters == "number") parameters = { angle: parameters };
+                if (typeof parameters == "number") parameters = {angle: parameters};
                 var newRotObject;
                 if (!element.Fei || !element.Fei.PhotoEffect) {
                     var paramClone = utils.clone(parameters);
                     newRotObject = new Fei.PhotoEffect(element, paramClone)._rootObj;
-                }
-                else {
+                } else {
                     element.Fei.PhotoEffect._handleRotation(parameters);
                     newRotObject = element.Fei.PhotoEffect._rootObj
                 }
@@ -278,9 +277,9 @@ var Fei = window.Fei = {
             this._rootObj = document.createElement('span');
             this._rootObj.style.display = "inline-block";
             this._rootObj.Fei =
-              {
-                  PhotoEffect: this
-              };
+                {
+                    PhotoEffect: this
+                };
             img.parentNode.insertBefore(this._rootObj, img);
             if (img.complete) {
                 this._Loader();
@@ -300,8 +299,12 @@ var Fei = window.Fei = {
         Fei.PhotoEffect.prototype = {
             _setupParameters: function (parameters) {
                 this._parameters = this._parameters || {};
-                if (typeof this._angle !== "number") { this._angle = 0; }
-                if (typeof parameters.angle === "number") { this._angle = parameters.angle; }
+                if (typeof this._angle !== "number") {
+                    this._angle = 0;
+                }
+                if (typeof parameters.angle === "number") {
+                    this._angle = parameters.angle;
+                }
                 this._parameters.animateTo = (typeof parameters.animateTo === "number") ? (parameters.animateTo) : (this._angle);
 
                 this._parameters.step = parameters.step || this._parameters.step || null;
@@ -320,16 +323,20 @@ var Fei = window.Fei = {
                     this._rotationCenterY = this._parameters.center[1];
                 }
 
-                if (parameters.bind && parameters.bind != this._parameters.bind) { this._BindEvents(parameters.bind); }
+                if (parameters.bind && parameters.bind != this._parameters.bind) {
+                    this._BindEvents(parameters.bind);
+                }
             },
-            _emptyFunction: function () { },
-            _defaultEasing: function (x, t, b, c, d) { return -c * ((t = t / d - 1) * t * t * t - 1) + b },
+            _emptyFunction: function () {
+            },
+            _defaultEasing: function (x, t, b, c, d) {
+                return -c * ((t = t / d - 1) * t * t * t - 1) + b
+            },
             _handleRotation: function (parameters, dontcheck) {
                 this._setupParameters(parameters);
                 if (this._angle == this._parameters.animateTo) {
                     this._rotate(this._angle);
-                }
-                else {
+                } else {
                     this._animateStart();
                 }
             },
@@ -414,8 +421,7 @@ var Fei = window.Fei = {
                 // TODO: Bug for animatedGif for static rotation ? (to test)
                 if (checkEnd && !this._parameters.animatedGif) {
                     clearTimeout(this._timer);
-                }
-                else {
+                } else {
                     if (this._canvas || this._vimage || this._img) {
                         var angle = this._parameters.easing(0, actualTime - this._animateStartTime, this._animateStartAngle, this._parameters.animateTo - this._animateStartAngle, this._parameters.duration);
                         this._rotate((~~(angle * 10)) / 10);
@@ -504,7 +510,8 @@ var Fei = window.Fei = {
             id: me.domId
         });
         //event 图片加载完成触发
-        me.onload = function () { };
+        me.onload = function () {
+        };
         if (config) {
             for (var item in config) {
                 me[item] = config[item];
@@ -543,7 +550,7 @@ var Fei = window.Fei = {
         },
 
         /**
-         * 图片加载完成的处理逻辑 
+         * 图片加载完成的处理逻辑
          * 初始化参数
          * 回调fimage的onload事件
          * @method imgLoad
@@ -557,18 +564,32 @@ var Fei = window.Fei = {
             try {
                 var imgObj = new Image();
                 imgObj.src = me.src;
+                var setWH = function () {
+                    me.width = imgObj.width;
+                    me.height = imgObj.height;
+                    me.orgWidth = imgObj.width;
+                    me.orgHeight = imgObj.height;
+                    me.rotation = 0;
 
-                me.width = imgObj.width;
-                me.height = imgObj.height;
-                me.orgWidth = imgObj.width;
-                me.orgHeight = imgObj.height;
-                me.rotation = 0;
+                    if (me.onload) {
+                        me.onload.call(window, me);
+                    }
+                }
+                if (imgObj.complete) {
+                    setWH();
+                } else {
+                    imgObj.onload = function () {
+                        setWH();
+                    };
+                    me.dom.onreadystatechange = function () {
+                        if (this.readyState == "complete") {
+                            setWH();
+                        }
+                    }
+                }
 
                 delete imgObj
-            } catch (e) { }
-
-            if (me.onload) {
-                me.onload.call(window, me);
+            } catch (e) {
             }
         },
 
@@ -1169,6 +1190,17 @@ var Fei = window.Fei = {
             }
 
             me.switchTo(me.currentIndex);
+        },
+
+        /**
+         * get image
+         * @method getImage
+         * @return { Object } fImage对象
+         */
+        getImage: function () {
+            var me = this,
+                img = me.image;
+            return me.image;
         }
     }
 })();
