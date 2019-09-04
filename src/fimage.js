@@ -87,19 +87,32 @@
             try {
                 var imgObj = new Image();
                 imgObj.src = me.src;
+                var setWH = function () {
+                    me.width = imgObj.width;
+                    me.height = imgObj.height;
+                    me.orgWidth = imgObj.width;
+                    me.orgHeight = imgObj.height;
+                    me.rotation = 0;
 
-                me.width = imgObj.width;
-                me.height = imgObj.height;
-                me.orgWidth = imgObj.width;
-                me.orgHeight = imgObj.height;
-                me.rotation = 0;
+                    if (me.onload) {
+                        me.onload.call(window, me);
+                    }
+                }
+                if (imgObj.complete) {
+                    setWH();
+                } else {
+                    imgObj.onload = function () {
+                        setWH();
+                    };
+                    me.dom.onreadystatechange = function () {
+                        if (this.readyState == "complete") {
+                            setWH();
+                        }
+                    }
+                }
 
                 delete imgObj
             } catch (e) { }
-
-            if (me.onload) {
-                me.onload.call(window, me);
-            }
         },
 
         /**
