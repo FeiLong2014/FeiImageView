@@ -135,4 +135,4 @@ Method：
 </table>
 
 #截图
-<img src='images/tu.png' />
+<img src='http://feilong2014.github.io/FeiImageView/images/tu.png' />
