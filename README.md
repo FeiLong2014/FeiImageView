@@ -15,7 +15,7 @@ Edge
 Others(支持css3动画的浏览器) 
 
 #demo
-[点击这里查看示例](https://gitcdn.link/repo/FeiLong2014/FeiImageView/master/viewpanel.html)
+[点击这里查看示例](http://feilong2014.github.io/FeiImageView/viewpanel.html)
 
 #other
 交流邮箱 287449943@qq.com
